@@ -1,10 +1,7 @@
-package cn.itcast.test;
-
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j(topic = "c.Test9")
-public class Test9 {
-
+@Slf4j(topic = "c.TestYield")
+public class TestYield {
     public static void main(String[] args) {
         Runnable task1 = () -> {
             int count = 0;
@@ -26,4 +23,5 @@ public class Test9 {
         t1.start();
         t2.start();
     }
+
 }

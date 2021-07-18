@@ -1,4 +1,4 @@
-package cn.itcast.pattern;
+package pattern;
 
 import java.util.Arrays;
 import java.util.concurrent.locks.Condition;

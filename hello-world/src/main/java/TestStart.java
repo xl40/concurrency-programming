@@ -1,20 +1,18 @@
-package cn.itcast.test;
-
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j(topic = "c.Test5")
-public class Test5 {
+import java.io.FileReader;
 
+@Slf4j(topic = "c.TestStart")
+public class TestStart {
     public static void main(String[] args) {
         Thread t1 = new Thread("t1") {
             @Override
             public void run() {
-                log.debug("running...");
+                log.debug(Thread.currentThread().getName());
             }
         };
 
-        System.out.println(t1.getState());
         t1.start();
-        System.out.println(t1.getState());
+        log.debug("do other things ...");
     }
 }

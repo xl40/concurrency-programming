@@ -1,4 +1,4 @@
-package cn.itcast.pattern;
+package pattern;
 
 import lombok.extern.slf4j.Slf4j;
 

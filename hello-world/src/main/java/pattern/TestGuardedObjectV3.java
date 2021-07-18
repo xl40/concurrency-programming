@@ -1,4 +1,4 @@
-package cn.itcast.pattern;
+package pattern;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static cn.itcast.pattern.Downloader.download;
+import static pattern.Downloader.download;
 
 @Slf4j(topic = "c.TestGuardedObjectV3")
 public class TestGuardedObjectV3 {

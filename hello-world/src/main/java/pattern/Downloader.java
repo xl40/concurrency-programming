@@ -1,4 +1,4 @@
-package cn.itcast.pattern;
+package pattern;
 
 import java.io.BufferedReader;
 import java.io.IOException;
