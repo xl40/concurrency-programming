@@ -1,18 +1,38 @@
+package methods;
+
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.concurrent.*;
 
 import static com.azul.crs.shared.Utils.sleep;
 
-@Slf4j(topic = "c.TestJoin")
+@Slf4j(topic = "c.methods.TestJoin")
 public class TestJoin {
     static int r = 0;
     static int r1 = 0;
     static int r2 = 0;
 
     public static void main(String[] args) throws InterruptedException {
-        test3();
+//        test3();
+
+        create();
+    }
+
+    public static void create(){
+
+        ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("demo-pool-%d").build();
+        ExecutorService singleThreadPool = new ThreadPoolExecutor(1, 1,
+                0L, TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
+
+        singleThreadPool.execute(()-> System.out.println(Thread.currentThread().getName()));
+        singleThreadPool.shutdown();
     }
 
     public static void test3() throws InterruptedException {
+
+
         Thread t1 = new Thread(() -> {
             sleep(2);
             r1 = 10;

@@ -1,6 +1,8 @@
+package methods;
+
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j(topic = "c.TestYield")
+@Slf4j(topic = "c.commonMethodDemo.TestYield")
 public class TestYield {
     public static void main(String[] args) {
         Runnable task1 = () -> {

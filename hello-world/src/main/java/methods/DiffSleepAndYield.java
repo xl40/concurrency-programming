@@ -1,3 +1,5 @@
+package methods;
+
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.TimeUnit;
@@ -7,7 +9,7 @@ import static java.lang.Thread.sleep;
 /**
  * @author xuelin
  */
-@Slf4j(topic = "c.DiffSleepAndYield")
+@Slf4j(topic = "c.commonMethodDemo.DiffSleepAndYield")
 public class DiffSleepAndYield {
 
     public static void main(String[] args) {
