@@ -13,25 +13,42 @@ public class TestJoin {
     static int r1 = 0;
     static int r2 = 0;
 
+    public static ExecutorService newFixedThreadPool(int nThreads) {
+        return new ThreadPoolExecutor(nThreads, nThreads,
+                0L, TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<Runnable>());
+    }
+
     public static void main(String[] args) throws InterruptedException {
 //        test3();
-
+        log.info(Thread.currentThread().getName());
         create();
     }
 
-    public static void create(){
+    public static void create() {
 
         ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("demo-pool-%d").build();
-        ExecutorService singleThreadPool = new ThreadPoolExecutor(1, 1,
+
+        ExecutorService singleThreadPool = new ThreadPoolExecutor(6, 6,
                 0L, TimeUnit.MILLISECONDS,
                 new LinkedBlockingQueue<>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
 
-        singleThreadPool.execute(()-> System.out.println(Thread.currentThread().getName()));
+        singleThreadPool.execute(() -> log.info(Thread.currentThread().getName()));
+        singleThreadPool.execute(() -> {
+            try {
+                test3();
+                test1();
+                log.info(Thread.currentThread().getName());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        });
         singleThreadPool.shutdown();
+
     }
 
     public static void test3() throws InterruptedException {
-
 
         Thread t1 = new Thread(() -> {
             sleep(2);
