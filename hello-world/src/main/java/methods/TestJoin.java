@@ -1,55 +1,23 @@
 package methods;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.*;
+import static n2.util.Sleeper.sleep;
 
-import static com.azul.crs.shared.Utils.sleep;
-
-@Slf4j(topic = "c.methods.TestJoin")
+/**
+ * @author xuelin
+ */
+@Slf4j(topic = "c.TestJoin")
 public class TestJoin {
     static int r = 0;
     static int r1 = 0;
     static int r2 = 0;
 
-    public static ExecutorService newFixedThreadPool(int nThreads) {
-        return new ThreadPoolExecutor(nThreads, nThreads,
-                0L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<Runnable>());
-    }
-
     public static void main(String[] args) throws InterruptedException {
-//        test3();
-        log.info(Thread.currentThread().getName());
-        create();
-    }
-
-    public static void create() {
-
-        ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("demo-pool-%d").build();
-
-        ExecutorService singleThreadPool = new ThreadPoolExecutor(6, 6,
-                0L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
-
-        singleThreadPool.execute(() -> log.info(Thread.currentThread().getName()));
-        singleThreadPool.execute(() -> {
-            try {
-                test3();
-                test1();
-                log.info(Thread.currentThread().getName());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        });
-        singleThreadPool.shutdown();
-
+        test3();
     }
 
     public static void test3() throws InterruptedException {
-
         Thread t1 = new Thread(() -> {
             sleep(2);
             r1 = 10;
@@ -60,7 +28,7 @@ public class TestJoin {
 
         // 线程执行结束会导致 join 结束
         log.debug("join begin");
-        t1.join(3000);
+        t1.join(1500);
         long end = System.currentTimeMillis();
         log.debug("r1: {} r2: {} cost: {}", r1, r2, end - start);
     }
@@ -78,15 +46,23 @@ public class TestJoin {
         t2.start();
         long start = System.currentTimeMillis();
         log.debug("join begin");
+
         t2.join();
         log.debug("t2 join end");
+
         t1.join();
         log.debug("t1 join end");
+
+
         long end = System.currentTimeMillis();
         log.debug("r1: {} r2: {} cost: {}", r1, r2, end - start);
     }
 
+
+
+
     private static void test1() throws InterruptedException {
+        // 下面的代码执行，打印 r 是什么?
         log.debug("开始");
         Thread t1 = new Thread(() -> {
             log.debug("开始");
@@ -95,8 +71,10 @@ public class TestJoin {
             r = 10;
         });
         t1.start();
-        t1.join();
+        //t1.join();
         log.debug("结果为:{}", r);
         log.debug("结束");
     }
+
+
 }
